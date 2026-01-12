@@ -1,0 +1,342 @@
+
+pokus.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000000  00803e00  00803e00  00000202  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         000001ae  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .comment      00000030  00000000  00000000  00000202  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000234  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000028  00000000  00000000  00000270  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   00001b4b  00000000  00000000  00000298  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 00001736  00000000  00000000  00001de3  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   000003f0  00000000  00000000  00003519  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000044  00000000  00000000  0000390c  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    00000c56  00000000  00000000  00003950  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    000001e5  00000000  00000000  000045a6  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000018  00000000  00000000  0000478b  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	19 c0       	rjmp	.+50     	; 0x34 <__ctors_end>
+   2:	20 c0       	rjmp	.+64     	; 0x44 <__bad_interrupt>
+   4:	1f c0       	rjmp	.+62     	; 0x44 <__bad_interrupt>
+   6:	1e c0       	rjmp	.+60     	; 0x44 <__bad_interrupt>
+   8:	1d c0       	rjmp	.+58     	; 0x44 <__bad_interrupt>
+   a:	1c c0       	rjmp	.+56     	; 0x44 <__bad_interrupt>
+   c:	1b c0       	rjmp	.+54     	; 0x44 <__bad_interrupt>
+   e:	1a c0       	rjmp	.+52     	; 0x44 <__bad_interrupt>
+  10:	19 c0       	rjmp	.+50     	; 0x44 <__bad_interrupt>
+  12:	18 c0       	rjmp	.+48     	; 0x44 <__bad_interrupt>
+  14:	17 c0       	rjmp	.+46     	; 0x44 <__bad_interrupt>
+  16:	16 c0       	rjmp	.+44     	; 0x44 <__bad_interrupt>
+  18:	15 c0       	rjmp	.+42     	; 0x44 <__bad_interrupt>
+  1a:	14 c0       	rjmp	.+40     	; 0x44 <__bad_interrupt>
+  1c:	13 c0       	rjmp	.+38     	; 0x44 <__bad_interrupt>
+  1e:	12 c0       	rjmp	.+36     	; 0x44 <__bad_interrupt>
+  20:	11 c0       	rjmp	.+34     	; 0x44 <__bad_interrupt>
+  22:	10 c0       	rjmp	.+32     	; 0x44 <__bad_interrupt>
+  24:	0f c0       	rjmp	.+30     	; 0x44 <__bad_interrupt>
+  26:	0e c0       	rjmp	.+28     	; 0x44 <__bad_interrupt>
+  28:	0d c0       	rjmp	.+26     	; 0x44 <__bad_interrupt>
+  2a:	0c c0       	rjmp	.+24     	; 0x44 <__bad_interrupt>
+  2c:	0b c0       	rjmp	.+22     	; 0x44 <__bad_interrupt>
+  2e:	0a c0       	rjmp	.+20     	; 0x44 <__bad_interrupt>
+  30:	09 c0       	rjmp	.+18     	; 0x44 <__bad_interrupt>
+  32:	08 c0       	rjmp	.+16     	; 0x44 <__bad_interrupt>
+
+00000034 <__ctors_end>:
+  34:	11 24       	eor	r1, r1
+  36:	1f be       	out	0x3f, r1	; 63
+  38:	cf ef       	ldi	r28, 0xFF	; 255
+  3a:	cd bf       	out	0x3d, r28	; 61
+  3c:	df e3       	ldi	r29, 0x3F	; 63
+  3e:	de bf       	out	0x3e, r29	; 62
+  40:	6a d0       	rcall	.+212    	; 0x116 <main>
+  42:	b3 c0       	rjmp	.+358    	; 0x1aa <_exit>
+
+00000044 <__bad_interrupt>:
+  44:	dd cf       	rjmp	.-70     	; 0x0 <__vectors>
+
+00000046 <_Z5ledkyji>:
+#define TLAC_port	PORTA
+#define TLAC_bm		(1<<0)
+
+#define MX_rychlost	1
+
+void ledky (unsigned int a, int b) {
+  46:	1f 93       	push	r17
+  48:	cf 93       	push	r28
+  4a:	df 93       	push	r29
+  4c:	dc 01       	movw	r26, r24
+	for (char n=0; n<3; n++) {
+  4e:	90 e0       	ldi	r25, 0x00	; 0
+  50:	93 30       	cpi	r25, 0x03	; 3
+  52:	60 f5       	brcc	.+88     	; 0xac <__EEPROM_REGION_LENGTH__+0x2c>
+		LEDTR_port.OUTCLR = 0b1111;
+  54:	e0 e2       	ldi	r30, 0x20	; 32
+  56:	f4 e0       	ldi	r31, 0x04	; 4
+  58:	8f e0       	ldi	r24, 0x0F	; 15
+  5a:	86 83       	std	Z+6, r24	; 0x06
+		LEDTR_port.OUTSET = 1 << (LEDTR_Gbp + n);
+  5c:	29 2f       	mov	r18, r25
+  5e:	30 e0       	ldi	r19, 0x00	; 0
+  60:	e9 01       	movw	r28, r18
+  62:	21 96       	adiw	r28, 0x01	; 1
+  64:	41 e0       	ldi	r20, 0x01	; 1
+  66:	50 e0       	ldi	r21, 0x00	; 0
+  68:	02 c0       	rjmp	.+4      	; 0x6e <_Z5ledkyji+0x28>
+  6a:	44 0f       	add	r20, r20
+  6c:	55 1f       	adc	r21, r21
+  6e:	ca 95       	dec	r28
+  70:	e2 f7       	brpl	.-8      	; 0x6a <_Z5ledkyji+0x24>
+  72:	45 83       	std	Z+5, r20	; 0x05
+		
+		// (0b101011001111 >> 4) & 0b00001111
+	    LED_port.OUTSET = (a >> n * 4) & 0b1111;
+  74:	22 0f       	add	r18, r18
+  76:	33 1f       	adc	r19, r19
+  78:	22 0f       	add	r18, r18
+  7a:	33 1f       	adc	r19, r19
+  7c:	ad 01       	movw	r20, r26
+  7e:	02 c0       	rjmp	.+4      	; 0x84 <__EEPROM_REGION_LENGTH__+0x4>
+  80:	56 95       	lsr	r21
+  82:	47 95       	ror	r20
+  84:	2a 95       	dec	r18
+  86:	e2 f7       	brpl	.-8      	; 0x80 <__EEPROM_REGION_LENGTH__>
+  88:	9a 01       	movw	r18, r20
+  8a:	2f 70       	andi	r18, 0x0F	; 15
+  8c:	e0 e4       	ldi	r30, 0x40	; 64
+  8e:	f4 e0       	ldi	r31, 0x04	; 4
+  90:	25 83       	std	Z+5, r18	; 0x05
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  92:	c1 e4       	ldi	r28, 0x41	; 65
+  94:	d3 e0       	ldi	r29, 0x03	; 3
+  96:	21 97       	sbiw	r28, 0x01	; 1
+  98:	f1 f7       	brne	.-4      	; 0x96 <__EEPROM_REGION_LENGTH__+0x16>
+  9a:	00 00       	nop
+		_delay_ms(MX_rychlost);
+		LED_port.OUTCLR = 0b1111;
+  9c:	86 83       	std	Z+6, r24	; 0x06
+  9e:	e1 e4       	ldi	r30, 0x41	; 65
+  a0:	f3 e0       	ldi	r31, 0x03	; 3
+  a2:	31 97       	sbiw	r30, 0x01	; 1
+  a4:	f1 f7       	brne	.-4      	; 0xa2 <__EEPROM_REGION_LENGTH__+0x22>
+  a6:	00 00       	nop
+#define TLAC_bm		(1<<0)
+
+#define MX_rychlost	1
+
+void ledky (unsigned int a, int b) {
+	for (char n=0; n<3; n++) {
+  a8:	9f 5f       	subi	r25, 0xFF	; 255
+  aa:	d2 cf       	rjmp	.-92     	; 0x50 <_Z5ledkyji+0xa>
+  ac:	20 e0       	ldi	r18, 0x00	; 0
+	    LED_port.OUTSET = (a >> n * 4) & 0b1111;
+		_delay_ms(MX_rychlost);
+		LED_port.OUTCLR = 0b1111;
+		_delay_ms (MX_rychlost);	
+	}
+	for (char n=0; n<3; n++) {
+  ae:	23 30       	cpi	r18, 0x03	; 3
+  b0:	70 f5       	brcc	.+92     	; 0x10e <__EEPROM_REGION_LENGTH__+0x8e>
+		LEDTR_port.OUTCLR = 0b1111;
+  b2:	e0 e2       	ldi	r30, 0x20	; 32
+  b4:	f4 e0       	ldi	r31, 0x04	; 4
+  b6:	3f e0       	ldi	r19, 0x0F	; 15
+  b8:	36 83       	std	Z+6, r19	; 0x06
+		LEDTR_port.OUTSET = 1 << (LEDTR_Gbp + n);
+  ba:	82 2f       	mov	r24, r18
+  bc:	90 e0       	ldi	r25, 0x00	; 0
+  be:	dc 01       	movw	r26, r24
+  c0:	11 96       	adiw	r26, 0x01	; 1
+  c2:	41 e0       	ldi	r20, 0x01	; 1
+  c4:	50 e0       	ldi	r21, 0x00	; 0
+  c6:	02 c0       	rjmp	.+4      	; 0xcc <__EEPROM_REGION_LENGTH__+0x4c>
+  c8:	44 0f       	add	r20, r20
+  ca:	55 1f       	adc	r21, r21
+  cc:	aa 95       	dec	r26
+  ce:	e2 f7       	brpl	.-8      	; 0xc8 <__EEPROM_REGION_LENGTH__+0x48>
+  d0:	45 83       	std	Z+5, r20	; 0x05
+	    LEDTR_port.OUTSET = LEDTR_ABbm;
+  d2:	41 e0       	ldi	r20, 0x01	; 1
+  d4:	45 83       	std	Z+5, r20	; 0x05
+		
+		LED_port.OUTSET = (b >> n * 4) & 0b1111;
+  d6:	88 0f       	add	r24, r24
+  d8:	99 1f       	adc	r25, r25
+  da:	88 0f       	add	r24, r24
+  dc:	99 1f       	adc	r25, r25
+  de:	ab 01       	movw	r20, r22
+  e0:	02 c0       	rjmp	.+4      	; 0xe6 <__EEPROM_REGION_LENGTH__+0x66>
+  e2:	55 95       	asr	r21
+  e4:	47 95       	ror	r20
+  e6:	8a 95       	dec	r24
+  e8:	e2 f7       	brpl	.-8      	; 0xe2 <__EEPROM_REGION_LENGTH__+0x62>
+  ea:	ca 01       	movw	r24, r20
+  ec:	8f 70       	andi	r24, 0x0F	; 15
+  ee:	e0 e4       	ldi	r30, 0x40	; 64
+  f0:	f4 e0       	ldi	r31, 0x04	; 4
+  f2:	85 83       	std	Z+5, r24	; 0x05
+  f4:	81 e4       	ldi	r24, 0x41	; 65
+  f6:	93 e0       	ldi	r25, 0x03	; 3
+  f8:	01 97       	sbiw	r24, 0x01	; 1
+  fa:	f1 f7       	brne	.-4      	; 0xf8 <__EEPROM_REGION_LENGTH__+0x78>
+  fc:	00 00       	nop
+		_delay_ms(MX_rychlost);
+		LED_port.OUTCLR = 0b1111;
+  fe:	36 83       	std	Z+6, r19	; 0x06
+ 100:	c1 e4       	ldi	r28, 0x41	; 65
+ 102:	d3 e0       	ldi	r29, 0x03	; 3
+ 104:	21 97       	sbiw	r28, 0x01	; 1
+ 106:	f1 f7       	brne	.-4      	; 0x104 <__EEPROM_REGION_LENGTH__+0x84>
+ 108:	00 00       	nop
+	    LED_port.OUTSET = (a >> n * 4) & 0b1111;
+		_delay_ms(MX_rychlost);
+		LED_port.OUTCLR = 0b1111;
+		_delay_ms (MX_rychlost);	
+	}
+	for (char n=0; n<3; n++) {
+ 10a:	2f 5f       	subi	r18, 0xFF	; 255
+ 10c:	d0 cf       	rjmp	.-96     	; 0xae <__EEPROM_REGION_LENGTH__+0x2e>
+		LED_port.OUTSET = (b >> n * 4) & 0b1111;
+		_delay_ms(MX_rychlost);
+		LED_port.OUTCLR = 0b1111;
+		_delay_ms (MX_rychlost);
+	}
+}
+ 10e:	df 91       	pop	r29
+ 110:	cf 91       	pop	r28
+ 112:	1f 91       	pop	r17
+ 114:	08 95       	ret
+
+00000116 <main>:
+
+
+int main(void) {
+	SW_port.DIR = SW_bm; // 0b00010000;
+ 116:	e0 e2       	ldi	r30, 0x20	; 32
+ 118:	f4 e0       	ldi	r31, 0x04	; 4
+ 11a:	80 e1       	ldi	r24, 0x10	; 16
+ 11c:	80 83       	st	Z, r24
+	
+	LED_port.DIR = 0b1111;
+ 11e:	8f e0       	ldi	r24, 0x0F	; 15
+ 120:	80 93 40 04 	sts	0x0440, r24	; 0x800440 <__RODATA_PM_OFFSET__+0x7f8440>
+	LEDTR_port.DIRSET = 0b1111;
+ 124:	81 83       	std	Z+1, r24	; 0x01
+	
+    while (1) {
+		int cRychlostPoohybu = 50;
+		
+		SW_port.OUTTGL = SW_bm;
+ 126:	80 e1       	ldi	r24, 0x10	; 16
+ 128:	80 93 27 04 	sts	0x0427, r24	; 0x800427 <__RODATA_PM_OFFSET__+0x7f8427>
+		
+		//ledky(0b10011011, 0b1110011111);
+		
+		for (int x=0; x<12; x++)
+ 12c:	00 e0       	ldi	r16, 0x00	; 0
+ 12e:	10 e0       	ldi	r17, 0x00	; 0
+ 130:	0c 30       	cpi	r16, 0x0C	; 12
+ 132:	11 05       	cpc	r17, r1
+ 134:	dc f4       	brge	.+54     	; 0x16c <main+0x56>
+ 136:	c0 e0       	ldi	r28, 0x00	; 0
+ 138:	d0 e0       	ldi	r29, 0x00	; 0
+			for (int i=0; i<cRychlostPoohybu/12; i++) ledky (1<<x, 2048>>x);
+ 13a:	c4 30       	cpi	r28, 0x04	; 4
+ 13c:	d1 05       	cpc	r29, r1
+ 13e:	9c f4       	brge	.+38     	; 0x166 <main+0x50>
+ 140:	60 e0       	ldi	r22, 0x00	; 0
+ 142:	78 e0       	ldi	r23, 0x08	; 8
+ 144:	00 2e       	mov	r0, r16
+ 146:	02 c0       	rjmp	.+4      	; 0x14c <main+0x36>
+ 148:	75 95       	asr	r23
+ 14a:	67 95       	ror	r22
+ 14c:	0a 94       	dec	r0
+ 14e:	e2 f7       	brpl	.-8      	; 0x148 <main+0x32>
+ 150:	81 e0       	ldi	r24, 0x01	; 1
+ 152:	90 e0       	ldi	r25, 0x00	; 0
+ 154:	00 2e       	mov	r0, r16
+ 156:	02 c0       	rjmp	.+4      	; 0x15c <main+0x46>
+ 158:	88 0f       	add	r24, r24
+ 15a:	99 1f       	adc	r25, r25
+ 15c:	0a 94       	dec	r0
+ 15e:	e2 f7       	brpl	.-8      	; 0x158 <main+0x42>
+ 160:	72 df       	rcall	.-284    	; 0x46 <_Z5ledkyji>
+ 162:	21 96       	adiw	r28, 0x01	; 1
+ 164:	ea cf       	rjmp	.-44     	; 0x13a <main+0x24>
+		
+		SW_port.OUTTGL = SW_bm;
+		
+		//ledky(0b10011011, 0b1110011111);
+		
+		for (int x=0; x<12; x++)
+ 166:	0f 5f       	subi	r16, 0xFF	; 255
+ 168:	1f 4f       	sbci	r17, 0xFF	; 255
+ 16a:	e2 cf       	rjmp	.-60     	; 0x130 <main+0x1a>
+ 16c:	0b e0       	ldi	r16, 0x0B	; 11
+ 16e:	10 e0       	ldi	r17, 0x00	; 0
+			for (int i=0; i<cRychlostPoohybu/12; i++) ledky (1<<x, 2048>>x);
+		
+		for (int x=11; x>=0; x--)
+ 170:	11 23       	and	r17, r17
+ 172:	cc f2       	brlt	.-78     	; 0x126 <main+0x10>
+ 174:	c0 e0       	ldi	r28, 0x00	; 0
+ 176:	d0 e0       	ldi	r29, 0x00	; 0
+			for (int i=0; i<cRychlostPoohybu/12; i++) ledky (1<<x, 2048>>x);
+ 178:	c4 30       	cpi	r28, 0x04	; 4
+ 17a:	d1 05       	cpc	r29, r1
+ 17c:	9c f4       	brge	.+38     	; 0x1a4 <main+0x8e>
+ 17e:	60 e0       	ldi	r22, 0x00	; 0
+ 180:	78 e0       	ldi	r23, 0x08	; 8
+ 182:	00 2e       	mov	r0, r16
+ 184:	02 c0       	rjmp	.+4      	; 0x18a <main+0x74>
+ 186:	75 95       	asr	r23
+ 188:	67 95       	ror	r22
+ 18a:	0a 94       	dec	r0
+ 18c:	e2 f7       	brpl	.-8      	; 0x186 <main+0x70>
+ 18e:	81 e0       	ldi	r24, 0x01	; 1
+ 190:	90 e0       	ldi	r25, 0x00	; 0
+ 192:	00 2e       	mov	r0, r16
+ 194:	02 c0       	rjmp	.+4      	; 0x19a <main+0x84>
+ 196:	88 0f       	add	r24, r24
+ 198:	99 1f       	adc	r25, r25
+ 19a:	0a 94       	dec	r0
+ 19c:	e2 f7       	brpl	.-8      	; 0x196 <main+0x80>
+ 19e:	53 df       	rcall	.-346    	; 0x46 <_Z5ledkyji>
+ 1a0:	21 96       	adiw	r28, 0x01	; 1
+ 1a2:	ea cf       	rjmp	.-44     	; 0x178 <main+0x62>
+		//ledky(0b10011011, 0b1110011111);
+		
+		for (int x=0; x<12; x++)
+			for (int i=0; i<cRychlostPoohybu/12; i++) ledky (1<<x, 2048>>x);
+		
+		for (int x=11; x>=0; x--)
+ 1a4:	01 50       	subi	r16, 0x01	; 1
+ 1a6:	11 09       	sbc	r17, r1
+ 1a8:	e3 cf       	rjmp	.-58     	; 0x170 <main+0x5a>
+
+000001aa <_exit>:
+ 1aa:	f8 94       	cli
+
+000001ac <__stop_program>:
+ 1ac:	ff cf       	rjmp	.-2      	; 0x1ac <__stop_program>

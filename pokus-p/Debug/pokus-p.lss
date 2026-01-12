@@ -1,0 +1,387 @@
+
+pokus-p.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000000  00803e00  00803e00  00000288  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         00000214  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .bss          00000005  00803e00  00803e00  00000288  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  00000288  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000002b8  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000038  00000000  00000000  000002f4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   00002127  00000000  00000000  0000032c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 000017b1  00000000  00000000  00002453  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   000003c0  00000000  00000000  00003c04  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  00000090  00000000  00000000  00003fc4  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    00000e3b  00000000  00000000  00004054  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    000001ed  00000000  00000000  00004e8f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000028  00000000  00000000  0000507c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	19 c0       	rjmp	.+50     	; 0x34 <__ctors_end>
+   2:	28 c0       	rjmp	.+80     	; 0x54 <__bad_interrupt>
+   4:	27 c0       	rjmp	.+78     	; 0x54 <__bad_interrupt>
+   6:	26 c0       	rjmp	.+76     	; 0x54 <__bad_interrupt>
+   8:	25 c0       	rjmp	.+74     	; 0x54 <__bad_interrupt>
+   a:	24 c0       	rjmp	.+72     	; 0x54 <__bad_interrupt>
+   c:	23 c0       	rjmp	.+70     	; 0x54 <__bad_interrupt>
+   e:	22 c0       	rjmp	.+68     	; 0x54 <__bad_interrupt>
+  10:	88 c0       	rjmp	.+272    	; 0x122 <__vector_8>
+  12:	20 c0       	rjmp	.+64     	; 0x54 <__bad_interrupt>
+  14:	1f c0       	rjmp	.+62     	; 0x54 <__bad_interrupt>
+  16:	1e c0       	rjmp	.+60     	; 0x54 <__bad_interrupt>
+  18:	1d c0       	rjmp	.+58     	; 0x54 <__bad_interrupt>
+  1a:	1c c0       	rjmp	.+56     	; 0x54 <__bad_interrupt>
+  1c:	1b c0       	rjmp	.+54     	; 0x54 <__bad_interrupt>
+  1e:	1a c0       	rjmp	.+52     	; 0x54 <__bad_interrupt>
+  20:	19 c0       	rjmp	.+50     	; 0x54 <__bad_interrupt>
+  22:	18 c0       	rjmp	.+48     	; 0x54 <__bad_interrupt>
+  24:	17 c0       	rjmp	.+46     	; 0x54 <__bad_interrupt>
+  26:	16 c0       	rjmp	.+44     	; 0x54 <__bad_interrupt>
+  28:	15 c0       	rjmp	.+42     	; 0x54 <__bad_interrupt>
+  2a:	14 c0       	rjmp	.+40     	; 0x54 <__bad_interrupt>
+  2c:	13 c0       	rjmp	.+38     	; 0x54 <__bad_interrupt>
+  2e:	12 c0       	rjmp	.+36     	; 0x54 <__bad_interrupt>
+  30:	11 c0       	rjmp	.+34     	; 0x54 <__bad_interrupt>
+  32:	10 c0       	rjmp	.+32     	; 0x54 <__bad_interrupt>
+
+00000034 <__ctors_end>:
+  34:	11 24       	eor	r1, r1
+  36:	1f be       	out	0x3f, r1	; 63
+  38:	cf ef       	ldi	r28, 0xFF	; 255
+  3a:	cd bf       	out	0x3d, r28	; 61
+  3c:	df e3       	ldi	r29, 0x3F	; 63
+  3e:	de bf       	out	0x3e, r29	; 62
+
+00000040 <__do_clear_bss>:
+  40:	2e e3       	ldi	r18, 0x3E	; 62
+  42:	a0 e0       	ldi	r26, 0x00	; 0
+  44:	be e3       	ldi	r27, 0x3E	; 62
+  46:	01 c0       	rjmp	.+2      	; 0x4a <.do_clear_bss_start>
+
+00000048 <.do_clear_bss_loop>:
+  48:	1d 92       	st	X+, r1
+
+0000004a <.do_clear_bss_start>:
+  4a:	a5 30       	cpi	r26, 0x05	; 5
+  4c:	b2 07       	cpc	r27, r18
+  4e:	e1 f7       	brne	.-8      	; 0x48 <.do_clear_bss_loop>
+  50:	24 d0       	rcall	.+72     	; 0x9a <main>
+  52:	de c0       	rjmp	.+444    	; 0x210 <_exit>
+
+00000054 <__bad_interrupt>:
+  54:	d5 cf       	rjmp	.-86     	; 0x0 <__vectors>
+
+00000056 <_Z5ledkyii>:
+
+int ledA;
+int ledB;
+
+void ledky (int a, int b) {
+	ledA = a;
+  56:	80 93 03 3e 	sts	0x3E03, r24	; 0x803e03 <ledA>
+  5a:	90 93 04 3e 	sts	0x3E04, r25	; 0x803e04 <ledA+0x1>
+	ledB = b;
+  5e:	60 93 01 3e 	sts	0x3E01, r22	; 0x803e01 <ledB>
+  62:	70 93 02 3e 	sts	0x3E02, r23	; 0x803e02 <ledB+0x1>
+  66:	08 95       	ret
+
+00000068 <_Z8bargrafyii>:
+}
+
+void bargrafy(int a, int b) {
+	ledky(4095 >> 12-a, 4095 >> 12-b);
+  68:	2c e0       	ldi	r18, 0x0C	; 12
+  6a:	30 e0       	ldi	r19, 0x00	; 0
+  6c:	a9 01       	movw	r20, r18
+  6e:	46 1b       	sub	r20, r22
+  70:	57 0b       	sbc	r21, r23
+  72:	ba 01       	movw	r22, r20
+  74:	4f ef       	ldi	r20, 0xFF	; 255
+  76:	5f e0       	ldi	r21, 0x0F	; 15
+  78:	fa 01       	movw	r30, r20
+  7a:	02 c0       	rjmp	.+4      	; 0x80 <__EEPROM_REGION_LENGTH__>
+  7c:	f5 95       	asr	r31
+  7e:	e7 95       	ror	r30
+  80:	6a 95       	dec	r22
+  82:	e2 f7       	brpl	.-8      	; 0x7c <_Z8bargrafyii+0x14>
+  84:	bf 01       	movw	r22, r30
+  86:	28 1b       	sub	r18, r24
+  88:	39 0b       	sbc	r19, r25
+  8a:	ca 01       	movw	r24, r20
+  8c:	02 c0       	rjmp	.+4      	; 0x92 <__EEPROM_REGION_LENGTH__+0x12>
+  8e:	95 95       	asr	r25
+  90:	87 95       	ror	r24
+  92:	2a 95       	dec	r18
+  94:	e2 f7       	brpl	.-8      	; 0x8e <__EEPROM_REGION_LENGTH__+0xe>
+  96:	df df       	rcall	.-66     	; 0x56 <_Z5ledkyii>
+  98:	08 95       	ret
+
+0000009a <main>:
+}
+
+
+int main(void) {
+	SW_port.DIR = SW_bm; // 0b00010000;
+  9a:	e0 e2       	ldi	r30, 0x20	; 32
+  9c:	f4 e0       	ldi	r31, 0x04	; 4
+  9e:	80 e1       	ldi	r24, 0x10	; 16
+  a0:	80 83       	st	Z, r24
+	
+	LED_port.DIR = 0b1111;
+  a2:	8f e0       	ldi	r24, 0x0F	; 15
+  a4:	80 93 40 04 	sts	0x0440, r24	; 0x800440 <__RODATA_PM_OFFSET__+0x7f8440>
+	LEDTR_port.DIRSET = 0b1111;
+  a8:	81 83       	std	Z+1, r24	; 0x01
+	
+	TCA0.SINGLE.CTRLA = 0;
+  aa:	e0 e0       	ldi	r30, 0x00	; 0
+  ac:	fa e0       	ldi	r31, 0x0A	; 10
+  ae:	10 82       	st	Z, r1
+	TCA0.SINGLE.CTRLB = 0;
+  b0:	11 82       	std	Z+1, r1	; 0x01
+	TCA0.SINGLE.CTRLC = 0;
+  b2:	12 82       	std	Z+2, r1	; 0x02
+	TCA0.SINGLE.CTRLD = 0;
+  b4:	13 82       	std	Z+3, r1	; 0x03
+	TCA0.SINGLE.INTCTRL = TCA_SINGLE_OVF_bm;
+  b6:	81 e0       	ldi	r24, 0x01	; 1
+  b8:	82 87       	std	Z+10, r24	; 0x0a
+	TCA0.SINGLE.PER = F_CPU/10000UL;
+  ba:	2d e4       	ldi	r18, 0x4D	; 77
+  bc:	31 e0       	ldi	r19, 0x01	; 1
+  be:	26 a3       	std	Z+38, r18	; 0x26
+  c0:	37 a3       	std	Z+39, r19	; 0x27
+	TCA0.SINGLE.CTRLA = TCA_SINGLE_ENABLE_bm;
+  c2:	80 83       	st	Z, r24
+	TCA0.SINGLE.INTFLAGS = TCA_SINGLE_OVF_bm;
+  c4:	83 87       	std	Z+11, r24	; 0x0b
+	
+	__asm("sei");
+  c6:	78 94       	sei
+void bargrafy(int a, int b) {
+	ledky(4095 >> 12-a, 4095 >> 12-b);
+}
+
+
+int main(void) {
+  c8:	01 e0       	ldi	r16, 0x01	; 1
+  ca:	10 e0       	ldi	r17, 0x00	; 0
+  cc:	c1 e0       	ldi	r28, 0x01	; 1
+  ce:	d0 e0       	ldi	r29, 0x00	; 0
+	__asm("sei");
+	
+	 int a=1;
+	 int b=1;
+	while (1) {
+		SW_port.OUTTGL = SW_bm;
+  d0:	80 e1       	ldi	r24, 0x10	; 16
+  d2:	80 93 27 04 	sts	0x0427, r24	; 0x800427 <__RODATA_PM_OFFSET__+0x7f8427>
+		
+		//ledky(0b10011011, 0b1110011111);
+       		
+		if (!(TLAC_port.IN & TLAC_bm)) {
+  d6:	80 91 08 04 	lds	r24, 0x0408	; 0x800408 <__RODATA_PM_OFFSET__+0x7f8408>
+  da:	80 fd       	sbrc	r24, 0
+  dc:	0e c0       	rjmp	.+28     	; 0xfa <main+0x60>
+			bargrafy(a, b);
+  de:	b8 01       	movw	r22, r16
+  e0:	ce 01       	movw	r24, r28
+  e2:	c2 df       	rcall	.-124    	; 0x68 <_Z8bargrafyii>
+			a++;
+  e4:	21 96       	adiw	r28, 0x01	; 1
+			b++;
+  e6:	0f 5f       	subi	r16, 0xFF	; 255
+  e8:	1f 4f       	sbci	r17, 0xFF	; 255
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  ea:	2a e6       	ldi	r18, 0x6A	; 106
+  ec:	84 e0       	ldi	r24, 0x04	; 4
+  ee:	91 e0       	ldi	r25, 0x01	; 1
+  f0:	21 50       	subi	r18, 0x01	; 1
+  f2:	80 40       	sbci	r24, 0x00	; 0
+  f4:	90 40       	sbci	r25, 0x00	; 0
+  f6:	e1 f7       	brne	.-8      	; 0xf0 <main+0x56>
+  f8:	00 c0       	rjmp	.+0      	; 0xfa <main+0x60>
+			_delay_ms (100);
+		}
+		 if (a==13) {
+  fa:	cd 30       	cpi	r28, 0x0D	; 13
+  fc:	d1 05       	cpc	r29, r1
+  fe:	41 f7       	brne	.-48     	; 0xd0 <main+0x36>
+ 100:	2a e6       	ldi	r18, 0x6A	; 106
+ 102:	84 e0       	ldi	r24, 0x04	; 4
+ 104:	91 e0       	ldi	r25, 0x01	; 1
+ 106:	21 50       	subi	r18, 0x01	; 1
+ 108:	80 40       	sbci	r24, 0x00	; 0
+ 10a:	90 40       	sbci	r25, 0x00	; 0
+ 10c:	e1 f7       	brne	.-8      	; 0x106 <main+0x6c>
+ 10e:	00 c0       	rjmp	.+0      	; 0x110 <main+0x76>
+ 110:	2a e6       	ldi	r18, 0x6A	; 106
+ 112:	84 e0       	ldi	r24, 0x04	; 4
+ 114:	91 e0       	ldi	r25, 0x01	; 1
+ 116:	21 50       	subi	r18, 0x01	; 1
+ 118:	80 40       	sbci	r24, 0x00	; 0
+ 11a:	90 40       	sbci	r25, 0x00	; 0
+ 11c:	e1 f7       	brne	.-8      	; 0x116 <main+0x7c>
+ 11e:	00 c0       	rjmp	.+0      	; 0x120 <main+0x86>
+ 120:	d3 cf       	rjmp	.-90     	; 0xc8 <main+0x2e>
+
+00000122 <__vector_8>:
+		 }
+	}
+}
+        
+
+ISR (TCA0_OVF_vect) {
+ 122:	1f 92       	push	r1
+ 124:	0f 92       	push	r0
+ 126:	0f b6       	in	r0, 0x3f	; 63
+ 128:	0f 92       	push	r0
+ 12a:	11 24       	eor	r1, r1
+ 12c:	2f 93       	push	r18
+ 12e:	3f 93       	push	r19
+ 130:	4f 93       	push	r20
+ 132:	5f 93       	push	r21
+ 134:	6f 93       	push	r22
+ 136:	7f 93       	push	r23
+ 138:	8f 93       	push	r24
+ 13a:	9f 93       	push	r25
+ 13c:	ef 93       	push	r30
+ 13e:	ff 93       	push	r31
+	static char n = 0;
+	
+	LED_port.OUTCLR = 0b1111;
+ 140:	8f e0       	ldi	r24, 0x0F	; 15
+ 142:	80 93 46 04 	sts	0x0446, r24	; 0x800446 <__RODATA_PM_OFFSET__+0x7f8446>
+	LEDTR_port.OUTCLR = 0b1111;
+ 146:	e0 e2       	ldi	r30, 0x20	; 32
+ 148:	f4 e0       	ldi	r31, 0x04	; 4
+ 14a:	86 83       	std	Z+6, r24	; 0x06
+	LEDTR_port.OUTSET = 1 << (LEDTR_Gbp + (n % 3));
+ 14c:	80 91 00 3e 	lds	r24, 0x3E00	; 0x803e00 <__DATA_REGION_ORIGIN__>
+ 150:	9b ea       	ldi	r25, 0xAB	; 171
+ 152:	89 9f       	mul	r24, r25
+ 154:	91 2d       	mov	r25, r1
+ 156:	11 24       	eor	r1, r1
+ 158:	96 95       	lsr	r25
+ 15a:	29 2f       	mov	r18, r25
+ 15c:	22 0f       	add	r18, r18
+ 15e:	92 0f       	add	r25, r18
+ 160:	28 2f       	mov	r18, r24
+ 162:	29 1b       	sub	r18, r25
+ 164:	30 e0       	ldi	r19, 0x00	; 0
+ 166:	2f 5f       	subi	r18, 0xFF	; 255
+ 168:	3f 4f       	sbci	r19, 0xFF	; 255
+ 16a:	41 e0       	ldi	r20, 0x01	; 1
+ 16c:	50 e0       	ldi	r21, 0x00	; 0
+ 16e:	ba 01       	movw	r22, r20
+ 170:	02 c0       	rjmp	.+4      	; 0x176 <__vector_8+0x54>
+ 172:	66 0f       	add	r22, r22
+ 174:	77 1f       	adc	r23, r23
+ 176:	2a 95       	dec	r18
+ 178:	e2 f7       	brpl	.-8      	; 0x172 <__vector_8+0x50>
+ 17a:	65 83       	std	Z+5, r22	; 0x05
+	
+	if (n > 2) {
+ 17c:	83 30       	cpi	r24, 0x03	; 3
+ 17e:	c0 f0       	brcs	.+48     	; 0x1b0 <__vector_8+0x8e>
+		LEDTR_port.OUTSET = LEDTR_ABbm;
+ 180:	91 e0       	ldi	r25, 0x01	; 1
+ 182:	90 93 25 04 	sts	0x0425, r25	; 0x800425 <__RODATA_PM_OFFSET__+0x7f8425>
+		LED_port.OUTSET = (ledA >> (n - 3) * 4) & 0b1111;
+ 186:	48 2f       	mov	r20, r24
+ 188:	50 e0       	ldi	r21, 0x00	; 0
+ 18a:	43 50       	subi	r20, 0x03	; 3
+ 18c:	51 09       	sbc	r21, r1
+ 18e:	44 0f       	add	r20, r20
+ 190:	55 1f       	adc	r21, r21
+ 192:	44 0f       	add	r20, r20
+ 194:	55 1f       	adc	r21, r21
+ 196:	20 91 03 3e 	lds	r18, 0x3E03	; 0x803e03 <ledA>
+ 19a:	30 91 04 3e 	lds	r19, 0x3E04	; 0x803e04 <ledA+0x1>
+ 19e:	02 c0       	rjmp	.+4      	; 0x1a4 <__vector_8+0x82>
+ 1a0:	35 95       	asr	r19
+ 1a2:	27 95       	ror	r18
+ 1a4:	4a 95       	dec	r20
+ 1a6:	e2 f7       	brpl	.-8      	; 0x1a0 <__vector_8+0x7e>
+ 1a8:	2f 70       	andi	r18, 0x0F	; 15
+ 1aa:	20 93 45 04 	sts	0x0445, r18	; 0x800445 <__RODATA_PM_OFFSET__+0x7f8445>
+ 1ae:	17 c0       	rjmp	.+46     	; 0x1de <__vector_8+0xbc>
+	} else if (n<6) {
+ 1b0:	86 30       	cpi	r24, 0x06	; 6
+ 1b2:	a8 f4       	brcc	.+42     	; 0x1de <__vector_8+0xbc>
+		LEDTR_port.OUTCLR = LEDTR_ABbm;
+ 1b4:	91 e0       	ldi	r25, 0x01	; 1
+ 1b6:	90 93 26 04 	sts	0x0426, r25	; 0x800426 <__RODATA_PM_OFFSET__+0x7f8426>
+		LED_port.OUTSET = (ledB >> n * 4) & 0b1111;
+ 1ba:	48 2f       	mov	r20, r24
+ 1bc:	50 e0       	ldi	r21, 0x00	; 0
+ 1be:	44 0f       	add	r20, r20
+ 1c0:	55 1f       	adc	r21, r21
+ 1c2:	44 0f       	add	r20, r20
+ 1c4:	55 1f       	adc	r21, r21
+ 1c6:	20 91 01 3e 	lds	r18, 0x3E01	; 0x803e01 <ledB>
+ 1ca:	30 91 02 3e 	lds	r19, 0x3E02	; 0x803e02 <ledB+0x1>
+ 1ce:	02 c0       	rjmp	.+4      	; 0x1d4 <__vector_8+0xb2>
+ 1d0:	35 95       	asr	r19
+ 1d2:	27 95       	ror	r18
+ 1d4:	4a 95       	dec	r20
+ 1d6:	e2 f7       	brpl	.-8      	; 0x1d0 <__vector_8+0xae>
+ 1d8:	2f 70       	andi	r18, 0x0F	; 15
+ 1da:	20 93 45 04 	sts	0x0445, r18	; 0x800445 <__RODATA_PM_OFFSET__+0x7f8445>
+	} else {
+		
+	}
+	
+	n++;
+ 1de:	8f 5f       	subi	r24, 0xFF	; 255
+ 1e0:	80 93 00 3e 	sts	0x3E00, r24	; 0x803e00 <__DATA_REGION_ORIGIN__>
+	if (n > 25) n=0;
+ 1e4:	8a 31       	cpi	r24, 0x1A	; 26
+ 1e6:	10 f0       	brcs	.+4      	; 0x1ec <__vector_8+0xca>
+ 1e8:	10 92 00 3e 	sts	0x3E00, r1	; 0x803e00 <__DATA_REGION_ORIGIN__>
+	
+	TCA0.SINGLE.INTFLAGS = TCA_SINGLE_OVF_bm;
+ 1ec:	81 e0       	ldi	r24, 0x01	; 1
+ 1ee:	80 93 0b 0a 	sts	0x0A0B, r24	; 0x800a0b <__RODATA_PM_OFFSET__+0x7f8a0b>
+ 1f2:	ff 91       	pop	r31
+ 1f4:	ef 91       	pop	r30
+ 1f6:	9f 91       	pop	r25
+ 1f8:	8f 91       	pop	r24
+ 1fa:	7f 91       	pop	r23
+ 1fc:	6f 91       	pop	r22
+ 1fe:	5f 91       	pop	r21
+ 200:	4f 91       	pop	r20
+ 202:	3f 91       	pop	r19
+ 204:	2f 91       	pop	r18
+ 206:	0f 90       	pop	r0
+ 208:	0f be       	out	0x3f, r0	; 63
+ 20a:	0f 90       	pop	r0
+ 20c:	1f 90       	pop	r1
+ 20e:	18 95       	reti
+
+00000210 <_exit>:
+ 210:	f8 94       	cli
+
+00000212 <__stop_program>:
+ 212:	ff cf       	rjmp	.-2      	; 0x212 <__stop_program>
