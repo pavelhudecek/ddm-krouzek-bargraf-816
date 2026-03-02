@@ -13,6 +13,10 @@ Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "pokus1", "pokus1\pokus1.cpp
 EndProject
 Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "pokus0", "pokus0\pokus0.cppproj", "{737638D9-568F-44D1-8978-D4C85E5E1353}"
 EndProject
+Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "pokus-p1", "pokus-p1\pokus-p1.cppproj", "{F7F37FBE-A98C-430D-BBEE-EC9AF843309D}"
+EndProject
+Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "pokus-s1", "pokus-s1\pokus-s1.cppproj", "{01877466-8CC4-40B6-8149-80BF0834E827}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|AVR = Debug|AVR
@@ -39,6 +43,14 @@ Global
 		{737638D9-568F-44D1-8978-D4C85E5E1353}.Debug|AVR.Build.0 = Debug|AVR
 		{737638D9-568F-44D1-8978-D4C85E5E1353}.Release|AVR.ActiveCfg = Release|AVR
 		{737638D9-568F-44D1-8978-D4C85E5E1353}.Release|AVR.Build.0 = Release|AVR
+		{F7F37FBE-A98C-430D-BBEE-EC9AF843309D}.Debug|AVR.ActiveCfg = Debug|AVR
+		{F7F37FBE-A98C-430D-BBEE-EC9AF843309D}.Debug|AVR.Build.0 = Debug|AVR
+		{F7F37FBE-A98C-430D-BBEE-EC9AF843309D}.Release|AVR.ActiveCfg = Release|AVR
+		{F7F37FBE-A98C-430D-BBEE-EC9AF843309D}.Release|AVR.Build.0 = Release|AVR
+		{01877466-8CC4-40B6-8149-80BF0834E827}.Debug|AVR.ActiveCfg = Debug|AVR
+		{01877466-8CC4-40B6-8149-80BF0834E827}.Debug|AVR.Build.0 = Debug|AVR
+		{01877466-8CC4-40B6-8149-80BF0834E827}.Release|AVR.ActiveCfg = Release|AVR
+		{01877466-8CC4-40B6-8149-80BF0834E827}.Release|AVR.Build.0 = Release|AVR
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

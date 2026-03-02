@@ -19,17 +19,47 @@
 int ledA;
 int ledB;
 
-void ledky (int a, int b) {
+void ledky (int a, int b) { // ======================================
 	ledA = a;
 	ledB = b;
 }
 
-void bargrafy(int a, int b) {
+void bargrafy(int a, int b) { // ====================================
 	ledky(4095 >> 12-a, 4095 >> 12-b);
 }
 
+volatile uint16_t	ms10=0;
+volatile char		sekSync=0, msSync=0;
+char				ledJas = 20;
 
-int main(void) {
+void cekej(uint16_t n) { // =========================================
+	ms10=0;
+	
+	do {
+		if (msSync==1) {
+			msSync = 0;
+			
+			static int jas = 20 << 4;
+			
+			if (++jas > (30 << 4)) jas=0;
+			
+			ledJas = static_cast<char>(jas >> 4);
+			
+		}
+		
+		if (sekSync==1) {
+			sekSync=0;
+			
+			SW_port.OUTTGL = SW_bm;
+		}
+		
+		
+		
+	} while(ms10 < n*10);
+}
+
+
+int main(void) { // #################################################
 	SW_port.DIR = SW_bm; // 0b00010000;
 	
 	LED_port.DIR = 0b1111;
@@ -46,10 +76,10 @@ int main(void) {
 	
 	__asm("sei");
 	
-	 int a=1;
-	 int b=1;
+	int a=1;
+	int b=1;
 	while (1) {
-		SW_port.OUTTGL = SW_bm;
+		
 		
 		//ledky(0b10011011, 0b1110011111);
        		
@@ -57,20 +87,23 @@ int main(void) {
 			bargrafy(a, b);
 			a++;
 			b++;
-			_delay_ms (100);
+			cekej (100);
 		}
-		 if (a==13) {
-			 _delay_ms (100);
-			 a=1;
-			 b=1;
-			 _delay_ms (100);
-		 }
+		cekej(0);
+		if (a==13) {
+			cekej (100);
+			a=1;
+			b=1;
+			cekej (100);
+		}
 	}
 }
         
 
-ISR (TCA0_OVF_vect) {
+ISR (TCA0_OVF_vect) { // ============================================
 	static char n = 0;
+	static int	sekCnt = 0;
+	static char	msCnt = 0;
 	
 	LED_port.OUTCLR = 0b1111;
 	LEDTR_port.OUTCLR = 0b1111;
@@ -83,11 +116,24 @@ ISR (TCA0_OVF_vect) {
 		LEDTR_port.OUTCLR = LEDTR_ABbm;
 		LED_port.OUTSET = (ledB >> n * 4) & 0b1111;
 	} else {
-		// 6-25 zhasnuto
+		// 6 az 6+ledJas zhasnuto
 	}
 	
 	n++;
-	if (n > 10) n=0;
+	if (n > 6+ledJas) n=0;
+	
+	
+	ms10++;
+	
+	if (++sekCnt>10000) {
+		sekCnt = 0;
+		sekSync = 1;
+	}
+	if (++msCnt>10) {
+		msCnt = 0;
+		msSync = 1;
+	}
+	
 	
 	TCA0.SINGLE.INTFLAGS = TCA_SINGLE_OVF_bm;
 }

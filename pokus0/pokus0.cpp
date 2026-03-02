@@ -13,6 +13,7 @@
 #define LEDTR_Ybp	2
 #define LEDTR_Gbp	1
 #define LEDTR_ABbm	(1<<0)
+#define LEDTR_ABbp	0
 
 int main(void) {
 	SW_port.DIR = SW_bm; // 0b00010000;
@@ -22,17 +23,22 @@ int main(void) {
 	
     while (1) {
 		for (uint8_t sloupec=0; sloupec<2; sloupec++) {
-			LEDTR_port.OUTTGL = LEDTR_ABbm;
+			//LEDTR_port.OUTTGL = LEDTR_ABbm;
+			LEDTR_port.OUTCLR = LEDTR_ABbm;
+			LEDTR_port.OUTSET = sloupec << LEDTR_ABbp;
 			
 			for (uint8_t barva=0; barva<3; barva++) {
 				LEDTR_port.OUTCLR = 255 - LEDTR_ABbm - SW_bm;
 				LEDTR_port.OUTSET = 1 << LEDTR_Gbp + barva;
 				
 				LED_port.OUT = 0b1111;
-				_delay_ms(1);
+				_delay_us(10);
 				LED_port.OUT = 0;
-				_delay_ms(200);
+				_delay_us(10);
+				if (sloupec==0) _delay_us(500);
+				
 			}
+			//_delay_ms(100);
 		}
 		SW_port.OUTTGL = SW_bm;
     }

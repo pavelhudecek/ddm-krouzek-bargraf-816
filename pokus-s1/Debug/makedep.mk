@@ -2,5 +2,5 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
-pokus-ad1.cpp
+pokuss1.cpp
 
