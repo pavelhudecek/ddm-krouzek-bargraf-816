@@ -27,7 +27,7 @@ void ledky (int a, int b) { // ======================================
 	ledB = b;
 }
 
-void bargrafy(int a, int b) { // ====================================
+void bargrafy(uint8_t a, uint8_t b) { // ============================
 	ledky(4095 >> 12-a, 4095 >> 12-b);
 }
 
@@ -35,37 +35,17 @@ volatile uint16_t	ms10=0;
 volatile char		sekSync=0, msSync=0;
 char				ledJas = 20;
 
-uint8_t	uartRecvMsCnt = 0;
+void cekej(uint16_t n); // nìkteré funkce potøebují cekej,
+// ale ten je dole, tak se musí nad nì napsat jeho definice.
 
-void cekej(uint16_t n) { // =========================================
-	ms10=0;
-	
-	do {
-		if (msSync==1) {
-			msSync = 0;
-			
-			uartRecvMsCnt++;
-			
-			//static int jas = 20 << 4;
-			//if (++jas > (30 << 4)) jas=0;
-			//ledJas = static_cast<char>(jas >> 4);
-			
-		}
-		
-		if (sekSync==1) {
-			sekSync=0;
-			
-			SW_port.OUTTGL = SW_bm;
-		}
-		
-		
-		
-	} while(ms10 < n*10);
-}
+uint8_t	uartRecvMsCnt = 0;		// timeout v uartRecv
+bool	uartSendSemafor = false;// semafor aby se send nezaseknul když je použitej i v cekej
 
 void uartSend(char b) { // ==========================================
+	uartSendSemafor = true;
 	while ((USART0.STATUS & USART_DREIF_bm) == 0) cekej(0);
 	USART0.TXDATAL=b;
+	uartSendSemafor = false;
 }
 
 void uartSend(char* text) { // ======================================
@@ -90,29 +70,77 @@ void uartSend(uint32_t x) { // ======================================
 	}
 }
 
+void cekej(uint16_t n) { // =========================================
+	ms10=0;
+	
+	do {
+		if (msSync==1) {
+			msSync = 0;
+			
+			uartRecvMsCnt++;
+			
+			//static int jas = 20 << 4;
+			//if (++jas > (30 << 4)) jas=0;
+			//ledJas = static_cast<char>(jas >> 4);
+			
+		}
+		
+		if (sekSync==1) {
+			sekSync=0;
+			
+			SW_port.OUTTGL = SW_bm;
+			
+			static int tlacCas=0;
+			if (!(TLAC_port.IN & TLAC_bm) && !uartSendSemafor) {
+				uartSend("Tlacitko tlaceno ");
+				uartSend(static_cast<uint32_t>(tlacCas));
+				uartSend(" s\n");
+				tlacCas++;
+			} else {
+				tlacCas = 0;
+			}
+		}
+		
+	} while(ms10 < n*10);
+}
+
 const char		cNoRecv = 255;
 const uint8_t	cEndCharLimit = 10;
+// w waiting / r recv chr / t timeout / e endchar / b buf. overflow / u unknown
+char			recvEndType = 'w';
 char uartRecv(uint8_t timeout=0) { // ===============================
 	uartRecvMsCnt = 0;
 	while ((USART0.STATUS & USART_RXCIF_bm) == 0) {
 		cekej(0);
-		if (uartRecvMsCnt >= timeout) return cNoRecv;
+		if (uartRecvMsCnt >= timeout && timeout != 0) {
+			recvEndType = 't';
+			return cNoRecv;
+		}
 	}
+	recvEndType = 'r';
 	return USART0.RXDATAL;
 }
-uint8_t uartRecv(char* data, uint8_t limit, char* endChars=" -", uint8_t timeout=0) {
-	uint8_t n;
+uint8_t uartRecv(char* data, uint8_t limit, char* endChars=" -", bool wait0=true, uint8_t timeout=0) {
+	uint8_t n=0;
 	
-	for (n=0; n<limit; n++) {
+	if (wait0) { // neomezenì èekat na první znak
+		data[n] = uartRecv(0);
+		n++;
+	}
+	for (; n<limit; n++) {
 		data[n] = uartRecv(timeout);
 		for (uint8_t e=0; e<cEndCharLimit; e++) {
 			if (endChars[e]==0) break;
-			if (data[n]==endChars[e]) return n;
+			if (data[n]==endChars[e]) {
+				recvEndType = 'e';
+				return n;
+			}
 		}
-		if (data[n]==cNoRecv) return n;
+		if (recvEndType!='r') return n;
 	}
-	if (n==limit) return n;
-	return cNoRecv;
+	if (n==limit) {recvEndType = 'b'; return n;}
+	recvEndType = 'u';
+	return n;
 }
 
 int main(void) { // #################################################
@@ -133,6 +161,7 @@ int main(void) { // #################################################
 	// --------------------------------------------------------------
 	PORTMUX.CTRLB |= PORTMUX_USART0_ALTERNATE_gc;	// RxD - PORTA.2, TxD - PORTA.1
 	PORTA.DIRSET = 1<<1;
+	PORTA.OUTSET = 1<<1;
 	PORTA_PIN2CTRL = PORT_PULLUPEN_bm;
 	
 	USART0.CTRLA = 0;
@@ -145,31 +174,36 @@ int main(void) { // #################################################
 	
 	int a=1;
 	int b=1;
+	
+	const uint8_t cDataLen = 30;
+	char data[cDataLen]="01234567890123456789012345678";
 	while (1) {
-		
-		
-		//ledky(0b10011011, 0b1110011111);
-       		
-		/*if (!(TLAC_port.IN & TLAC_bm)) {
-			bargrafy(a, b);
-			a++;
-			b++;
-			cekej (100);
-		}
-		cekej(0);
-		if (a==13) {
-			cekej (100);
-			a=1;
-			b=1;
-			cekej (100);
-		}*/
-		uartSend("bbb ");
+		uartSend("bbb\n");		
 		for (int n=0; n<20; n++) {
 			uartSend(static_cast<uint32_t>(n));
 			uartSend(' ');
 			cekej(500);
 		}
 		uartSend('\n');
+		continue;
+		
+		/*for (int n=0; n<20; n++) {
+			uartSend(" n:");
+			uartSend(static_cast<uint32_t>(n));
+			uartSend(' ');
+			//cekej(500);
+			//uint8_t uartRecv(char* data, uint8_t limit, char* endChars=" -", bool wait0=true, uint8_t timeout=0) {
+			uint8_t pos = uartRecv(data+1, cDataLen-3, " ", true, 255);
+			data[0] = '\'';
+			data[pos+1] = '\'';
+			data[pos+2] = 0;
+			uartSend(data);
+			uartSend(" pos:");
+			uartSend(static_cast<uint32_t>(pos));
+			uartSend(" et:");
+			uartSend(recvEndType);
+			uartSend('\n');
+		}*/
 	}
 }
         

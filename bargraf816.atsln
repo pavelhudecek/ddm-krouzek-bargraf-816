@@ -17,6 +17,12 @@ Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "pokus-p1", "pokus-p1\pokus-
 EndProject
 Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "pokus-s1", "pokus-s1\pokus-s1.cppproj", "{01877466-8CC4-40B6-8149-80BF0834E827}"
 EndProject
+Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "pokus-s2", "pokus-s2\pokus-s2.cppproj", "{C8617553-A460-4880-8C48-73BCA2DDA784}"
+EndProject
+Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "pokus-s2c", "pokus-s2c\pokus-s2c.cppproj", "{4258D4BE-A094-4203-B429-D37939AC198A}"
+EndProject
+Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "pokus-s2cc", "pokus-s2cc\pokus-s2cc.cppproj", "{E1C88D5C-CDC1-42ED-9F18-EA201A555519}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|AVR = Debug|AVR
@@ -51,6 +57,18 @@ Global
 		{01877466-8CC4-40B6-8149-80BF0834E827}.Debug|AVR.Build.0 = Debug|AVR
 		{01877466-8CC4-40B6-8149-80BF0834E827}.Release|AVR.ActiveCfg = Release|AVR
 		{01877466-8CC4-40B6-8149-80BF0834E827}.Release|AVR.Build.0 = Release|AVR
+		{C8617553-A460-4880-8C48-73BCA2DDA784}.Debug|AVR.ActiveCfg = Debug|AVR
+		{C8617553-A460-4880-8C48-73BCA2DDA784}.Debug|AVR.Build.0 = Debug|AVR
+		{C8617553-A460-4880-8C48-73BCA2DDA784}.Release|AVR.ActiveCfg = Release|AVR
+		{C8617553-A460-4880-8C48-73BCA2DDA784}.Release|AVR.Build.0 = Release|AVR
+		{4258D4BE-A094-4203-B429-D37939AC198A}.Debug|AVR.ActiveCfg = Debug|AVR
+		{4258D4BE-A094-4203-B429-D37939AC198A}.Debug|AVR.Build.0 = Debug|AVR
+		{4258D4BE-A094-4203-B429-D37939AC198A}.Release|AVR.ActiveCfg = Release|AVR
+		{4258D4BE-A094-4203-B429-D37939AC198A}.Release|AVR.Build.0 = Release|AVR
+		{E1C88D5C-CDC1-42ED-9F18-EA201A555519}.Debug|AVR.ActiveCfg = Debug|AVR
+		{E1C88D5C-CDC1-42ED-9F18-EA201A555519}.Debug|AVR.Build.0 = Debug|AVR
+		{E1C88D5C-CDC1-42ED-9F18-EA201A555519}.Release|AVR.ActiveCfg = Release|AVR
+		{E1C88D5C-CDC1-42ED-9F18-EA201A555519}.Release|AVR.Build.0 = Release|AVR
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
