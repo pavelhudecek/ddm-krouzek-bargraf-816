@@ -78,12 +78,12 @@ uint16_t adcSPS = 0;
 
 void cekej(uint32_t t) { // ===================================================
 	uint32_t delayMs10 = t*10UL; // máme 10 kHz
-	static uint16_t 
+	//static uint16_t 
 	
 	// ms10 = 0;
 	atomMs0();
 	do {
-		if (ADC0.INTFLAGS & ADC_RESRDY_bm) { // je domìøeno
+		/*if (ADC0.INTFLAGS & ADC_RESRDY_bm) { // je domìøeno
 			if (ADC0.MUXPOS == TLAC_chan) { // bylo to od tlaèítek
 				const uint8_t TLAC_undef = TLAC_all+1;
 				const uint16_t TLAC_toler = 25*64;
@@ -122,7 +122,7 @@ void cekej(uint32_t t) { // ===================================================
 			} else {
 				// kdyby byl jinej kanál
 			}	
-		}
+		}*/
 		
 		if (msSync==1) { // -----------------------------------------
 			msSync=0;
@@ -288,17 +288,19 @@ int main(void) { // ###########################################################
 	int b=1;
 	
 	while (1) {
-		//uint32_t x = merit(TLAC_chan, 1280UL, 1280, 255);
+		//merit(uint8_t chan, uint32_t div=128UL, uint16_t vzorku=128, uint8_t ref=VREF_ADC0REFSEL_4V34_gc) {
+		uint32_t x = merit(TLAC_chan, 1280UL, 1280, 255);
 		//uint32_t x = merit(TLAC_chan, 64UL, 64000, 255);
+		a = static_cast<int>(x/(1023/12));
 		//a = static_cast<int>(x/(1024000/12));
-		a = tlacitka;
+		//a = tlacitka;
 		//b = tlacADval/(64 * TLAC_adCyklu * 1023/12);
 		bargrafy(a, b);
 		//ledky(4095>>(12-a), 1<<b);
 		if (++b>11) {b=0; print("\n");}
 			
-		print(tlacADval); print(" ");
-		print(tlacTmpVal); print(" / ");
+		print(x); print(" ");
+		print(a); print(" / ");
 
 		cekej(30);
 		continue;

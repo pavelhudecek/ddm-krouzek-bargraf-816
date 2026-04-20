@@ -23,6 +23,8 @@ Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "pokus-s2c", "pokus-s2c\poku
 EndProject
 Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "pokus-s2cc", "pokus-s2cc\pokus-s2cc.cppproj", "{E1C88D5C-CDC1-42ED-9F18-EA201A555519}"
 EndProject
+Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "pokus-ads", "pokus-ads\pokus-ads.cppproj", "{2052A65B-59BA-4581-B661-3B5397AA0687}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|AVR = Debug|AVR
@@ -69,6 +71,10 @@ Global
 		{E1C88D5C-CDC1-42ED-9F18-EA201A555519}.Debug|AVR.Build.0 = Debug|AVR
 		{E1C88D5C-CDC1-42ED-9F18-EA201A555519}.Release|AVR.ActiveCfg = Release|AVR
 		{E1C88D5C-CDC1-42ED-9F18-EA201A555519}.Release|AVR.Build.0 = Release|AVR
+		{2052A65B-59BA-4581-B661-3B5397AA0687}.Debug|AVR.ActiveCfg = Debug|AVR
+		{2052A65B-59BA-4581-B661-3B5397AA0687}.Debug|AVR.Build.0 = Debug|AVR
+		{2052A65B-59BA-4581-B661-3B5397AA0687}.Release|AVR.ActiveCfg = Release|AVR
+		{2052A65B-59BA-4581-B661-3B5397AA0687}.Release|AVR.Build.0 = Release|AVR
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

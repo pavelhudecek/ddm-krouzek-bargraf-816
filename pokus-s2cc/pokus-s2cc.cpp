@@ -152,6 +152,21 @@ int main(void) { // ###########################################################
 		cout << endl;
 	}*/
 	
+	/*cout << UART_bd << " " << UART_baud(UART_bd) << endl;
+	cout << 1000000 << " " << UART_baud(1000000) << endl;
+	
+	while(1) {
+		for (uint32_t r = 700000L; r<800000L; r+=200L) {
+			USART0.BAUD = UART_baud(r);
+			cout << "bbb\n";
+			cout << "r:" << r << "reg:" << USART0.BAUD << endl;
+			for (int n=0; n<10; n++) {cout << n << " "; cekej(10);}
+		}
+		cout << "wwww wwww wwww\n";
+	}
+	for (int n=0; 1; n++) {cout << n << (n%100==0 ? "\n" : " "); cekej(10);}*/
+		
+		
 	cout.floatPrec = 8;
 	cout.floatE = true;
 	while(1) {
